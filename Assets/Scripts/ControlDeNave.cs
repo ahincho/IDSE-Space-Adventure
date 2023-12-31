@@ -8,11 +8,19 @@ public class ControlDeNave : MonoBehaviour
     Rigidbody rigidbody;
     Transform transform;
     AudioSource audiosource;
+    private float accelerationForce = 5f;
+    private float decelerationForce = 4f;
+    private float tiltSpeed = 50f; // Velocidad de inclinación
+    private float stabilizationSpeed = 5f;
+    private float lateralForce = 8f;
+
+    private FuelController fuelController;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         transform = GetComponent<Transform>();
         audiosource = GetComponent<AudioSource>();
+        fuelController = FindObjectOfType<FuelController>();
     }
 
     // Update is called once per frame
@@ -24,11 +32,13 @@ public class ControlDeNave : MonoBehaviour
     }
     private void ProcesarInput()
     {
-        Propulsion();
         Rotacion();
-        
+        Acelerar();
+        Desacelerar();
+        Propulsion();
+        Inclinacion();
+        EstabilizarInclinacion();
     }
-
     private void Propulsion()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -36,19 +46,38 @@ public class ControlDeNave : MonoBehaviour
             rigidbody.freezeRotation = true;
             //print("Propulsor ...");
             rigidbody.AddRelativeForce(Vector3.up);
+            fuelController.UseFuel(Time.deltaTime);
+        }
+        rigidbody.freezeRotation = false;
+    }
 
+    private void Acelerar()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            // Aplicar fuerza hacia adelante en la dirección global
+            rigidbody.AddForce(transform.forward * accelerationForce, ForceMode.Acceleration);
+        
             if (!audiosource.isPlaying)
             {
-                audiosource.Play();
+                audiosource.Play(); 
             }
+            fuelController.UseFuel(Time.deltaTime);
         }
         else
         {
             audiosource.Stop();
         }
-        rigidbody.freezeRotation = false;
     }
 
+    private void Desacelerar()
+    {
+        if (Input.GetKey(KeyCode.S))
+        {
+            // Aplicar una fuerza contraria al movimiento actual para desacelerar
+            rigidbody.AddForce(-rigidbody.velocity.normalized * decelerationForce, ForceMode.Acceleration);
+        }
+    }
     private void Rotacion()
     {
         if (Input.GetKey(KeyCode.D))
@@ -58,6 +87,7 @@ public class ControlDeNave : MonoBehaviour
             var rotarDerecha = transform.rotation;
             rotarDerecha.z -= Time.deltaTime * 1;
             transform.rotation = rotarDerecha;
+            rigidbody.AddForce(transform.right * lateralForce, ForceMode.Acceleration);
         }
 
         else if (Input.GetKey(KeyCode.A))
@@ -67,6 +97,32 @@ public class ControlDeNave : MonoBehaviour
             var rotarIzquierda = transform.rotation;
             rotarIzquierda.z += Time.deltaTime * 1;
             transform.rotation = rotarIzquierda;
+            rigidbody.AddForce(-transform.right * lateralForce, ForceMode.Acceleration);
+        }
+    }
+    private void Inclinacion()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            // Inclinar a la derecha
+            transform.Rotate(Vector3.right, Time.deltaTime * tiltSpeed);
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            // Inclinar a la izquierda
+            transform.Rotate(Vector3.left, Time.deltaTime * tiltSpeed);
+        }
+    }
+
+    private void EstabilizarInclinacion()
+    {
+        // Si no se presiona ninguna tecla de inclinación, estabilizar la inclinación
+        if (!Input.GetKey(KeyCode.E) && !Input.GetKey(KeyCode.Q))
+        {
+            // Ajusta la inclinación a cero
+            Quaternion targetRotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * stabilizationSpeed);
         }
     }
 
@@ -101,6 +157,7 @@ public class ControlDeNave : MonoBehaviour
     */
 
     //RigidBody
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("GatilloSeguro"))
@@ -112,5 +169,6 @@ public class ControlDeNave : MonoBehaviour
             print("Gatillo peligroso...");
         }
     }
+    */
     
 }
