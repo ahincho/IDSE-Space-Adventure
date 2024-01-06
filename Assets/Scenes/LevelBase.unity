@@ -11055,7 +11055,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &924544879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11068,6 +11068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187309d79e98fee4c9e0ef94e5d94fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuGameOver: {fileID: 924544878}
 --- !u!114 &924544880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11454,6 +11455,18 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &976800714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976800706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b735fa93b3185488cbf7e76ff995cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1018971100
 GameObject:
   m_ObjectHideFlags: 0
@@ -11536,7 +11549,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1018971103}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 924544879}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: MenuHome
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MenuHome
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1018971103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11657,7 +11682,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1078830287}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 924544879}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1078830287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22050,7 +22087,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 33829cbef2e6fdb4e9a165413339016f, type: 2}
-    m_FontSize: 50
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -22095,7 +22132,7 @@ GameObject:
   - component: {fileID: 1922612402}
   - component: {fileID: 1922612401}
   m_Layer: 5
-  m_Name: ButtonStart
+  m_Name: ButtonRestart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22165,13 +22202,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 924544878}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 924544879}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -22302,6 +22339,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4640082839775715069, guid: 81ddaef9d4697d84ba75e74a69f45a43, type: 3}
       insertIndex: -1
       addedObject: {fileID: 976800713}
+    - targetCorrespondingSourceObject: {fileID: 4640082839775715069, guid: 81ddaef9d4697d84ba75e74a69f45a43, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 976800714}
   m_SourcePrefab: {fileID: 100100000, guid: 81ddaef9d4697d84ba75e74a69f45a43, type: 3}
 --- !u!1 &2083924071 stripped
 GameObject:

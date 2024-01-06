@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class FuelController : MonoBehaviour
@@ -9,6 +10,7 @@ public class FuelController : MonoBehaviour
     private float maxFuel = 100f;
     private float fuel;
     private Text fuelText;
+    [SerializeField] private GameOver menuGameOver;
 
     void Start()
     {
@@ -40,5 +42,9 @@ public class FuelController : MonoBehaviour
     {
         fuel -= amount;
         fuel = Mathf.Clamp(fuel, 0f, maxFuel); // Asegurar que el combustible no sea menor que 0 ni mayor que maxFuel
+        if (fuel <= 0)
+        {
+            menuGameOver.ActivateGameOver();
+        }
     }
 }
