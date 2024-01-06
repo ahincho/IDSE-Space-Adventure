@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ControlDeNave : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ControlDeNave : MonoBehaviour
     private float tiltSpeed = 50f; // Velocidad de inclinación
     private float stabilizationSpeed = 5f;
     private float lateralForce = 8f;
+
+    [SerializeField] private NextLevel nextLevel;
 
     private FuelController fuelController;
     void Start()
@@ -140,21 +143,14 @@ public class ControlDeNave : MonoBehaviour
         }
     }
 
-    //Static
-    /*
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TriggerSeguro"))
+        if (other.CompareTag("platformEnd"))
         {
-            print("Entrada segura...");
+            nextLevel.ActivateMenu();
         }
-        else if (other.CompareTag("TriggerPeligroso"))
-        {
-            print("Entrada peligrosa...");
-        }
+
     }
-    */
 
     //RigidBody
     /*
@@ -170,5 +166,5 @@ public class ControlDeNave : MonoBehaviour
         }
     }
     */
-    
+
 }

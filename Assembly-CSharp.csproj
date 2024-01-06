@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Obstacle.cs" />
     <Compile Include="Assets\Scripts\ControlDeNave.cs" />
+    <Compile Include="Assets\Scripts\NextLevel.cs" />
     <Compile Include="Assets\SoftEffects\Scripts\SoftEffectsFont.cs" />
     <Compile Include="Assets\Scripts\Score.cs" />
     <Compile Include="Assets\SoftEffects\Scripts\ClassExtensions.cs" />
