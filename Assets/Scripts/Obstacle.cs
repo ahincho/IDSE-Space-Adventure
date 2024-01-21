@@ -7,7 +7,13 @@ public class Obstacle : MonoBehaviour
     
     [SerializeField] private float points;
     [SerializeField] private Score score;
-    // Start is called before the first frame update
+
+    AudioSource audiosource;
+
+    void Start()
+    {
+        audiosource = GetComponent<AudioSource>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("spaceship"))
@@ -15,6 +21,6 @@ public class Obstacle : MonoBehaviour
             score.subtractScore(points);
             Destroy(gameObject);
         }
-
+  
     }
 }

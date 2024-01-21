@@ -5,12 +5,13 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class ControlDeNave : MonoBehaviour
 {
-    // Start is called before the first frame update
-    Rigidbody rigidbody;
-    Transform transform;
-    AudioSource audiosource;
+
+    new Rigidbody rigidbody;
+    new Transform transform;
+    public AudioSource audiosource;
+    public AudioSource audiosource2;
     private float accelerationForce = 5f;
-    private float decelerationForce = 4f;
+    private float decelerationForce = 8f;
     private float tiltSpeed = 50f; // Velocidad de inclinación
     private float stabilizationSpeed = 5f;
     private float lateralForce = 8f;
@@ -22,7 +23,6 @@ public class ControlDeNave : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         transform = GetComponent<Transform>();
-        audiosource = GetComponent<AudioSource>();
         fuelController = FindObjectOfType<FuelController>();
     }
 
@@ -49,7 +49,15 @@ public class ControlDeNave : MonoBehaviour
             rigidbody.freezeRotation = true;
             //print("Propulsor ...");
             rigidbody.AddRelativeForce(Vector3.up);
+            if (!audiosource2.isPlaying)
+            {
+                audiosource2.Play();
+            }
             fuelController.UseFuel(Time.deltaTime);
+        }
+        else
+        {
+            audiosource2.Stop();
         }
         rigidbody.freezeRotation = false;
     }
@@ -148,6 +156,11 @@ public class ControlDeNave : MonoBehaviour
         if (other.CompareTag("platformEnd"))
         {
             nextLevel.ActivateMenu();
+        }
+        if (other.CompareTag("Obstacle"))
+        {
+            print("Sonido");
+            //audioSourceCollision.Play();
         }
 
     }
