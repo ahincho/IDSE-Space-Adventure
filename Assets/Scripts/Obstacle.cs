@@ -7,13 +7,6 @@ public class Obstacle : MonoBehaviour
     
     [SerializeField] private float points;
     [SerializeField] private Score score;
-
-    AudioSource audiosource;
-
-    void Start()
-    {
-        audiosource = GetComponent<AudioSource>();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("spaceship"))

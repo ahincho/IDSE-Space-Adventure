@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class FuelController : MonoBehaviour
@@ -14,25 +13,25 @@ public class FuelController : MonoBehaviour
 
     void Start()
     {
-        fuel = maxFuel; // Inicializar el combustible al 100%
+        fuel = maxFuel; // Initialize fuel to 100%
         fuelText = GetComponent<Text>();
     }
 
     void Update()
     {
 
-        // Mostrar el combustible como porcentaje
+        // Show fuel as a percentage
         fuelText.text = ((fuel / maxFuel) * 100f).ToString("0") + "%";
 
         fuelText.color = Color.green;
 
 
   
-        if (fuel <= maxFuel * 0.50f) // Si está en el 50%
+        if (fuel <= maxFuel * 0.50f)
         {
             fuelText.color = Color.yellow;
         }
-        if (fuel <= maxFuel * 0.25f) // Si está en el 25%
+        if (fuel <= maxFuel * 0.25f)
         {
             fuelText.color = Color.red;
         }
@@ -41,7 +40,7 @@ public class FuelController : MonoBehaviour
     public void UseFuel(float amount)
     {
         fuel -= amount;
-        fuel = Mathf.Clamp(fuel, 0f, maxFuel); // Asegurar que el combustible no sea menor que 0 ni mayor que maxFuel
+        fuel = Mathf.Clamp(fuel, 0f, maxFuel); // Ensure fuel is not less than 0 or greater than maxFuel
         if (fuel <= 0)
         {
             menuGameOver.ActivateGameOver();

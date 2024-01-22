@@ -67,7 +67,6 @@
     <Compile Include="Assets\Scripts\DialogueController.cs" />
     <Compile Include="Assets\Scripts\GameOver.cs" />
     <Compile Include="Assets\Scripts\FuelController.cs" />
-    <Compile Include="Assets\StarSparrow\Readme\Readme Files\Scripts\ReadmeStarSparrow.cs" />
     <Compile Include="Assets\Scripts\MenuInicial.cs" />
   </ItemGroup>
   <ItemGroup>
