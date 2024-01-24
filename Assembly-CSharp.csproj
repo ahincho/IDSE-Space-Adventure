@@ -62,9 +62,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Obstacle.cs" />
     <Compile Include="Assets\Scripts\ControlDeNave.cs" />
+    <Compile Include="Assets\Scripts\HorizontalMovement.cs" />
     <Compile Include="Assets\Scripts\NextLevel.cs" />
     <Compile Include="Assets\Scripts\Score.cs" />
+    <Compile Include="Assets\Scripts\VerticalMovement.cs" />
+    <Compile Include="Assets\Scripts\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\DialogueController.cs" />
+    <Compile Include="Assets\Scripts\CircularMovement.cs" />
     <Compile Include="Assets\Scripts\GameOver.cs" />
     <Compile Include="Assets\Scripts\FuelController.cs" />
     <Compile Include="Assets\Scripts\MenuInicial.cs" />

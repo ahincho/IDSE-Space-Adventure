@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class ControlDeNave : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class ControlDeNave : MonoBehaviour
     public AudioSource audiosource;
     public AudioSource audiosource2;
     public AudioSource audioSourceCollision;
-    private float accelerationForce = 5f; 
+    private float accelerationForce = 5f;
     private float decelerationForce = 8f;
     private float tiltSpeed = 50f;
     private float stabilizationSpeed = 5f;
@@ -20,11 +18,13 @@ public class ControlDeNave : MonoBehaviour
     [SerializeField] private NextLevel nextLevel;
 
     private FuelController fuelController;
+    private List<Checkpoint> checkpoints = new List<Checkpoint>();
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         transform = GetComponent<Transform>();
         fuelController = FindObjectOfType<FuelController>();
+        checkpoints.AddRange(FindObjectsOfType<Checkpoint>());
     }
 
     void Update()
@@ -65,10 +65,10 @@ public class ControlDeNave : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             rigidbody.AddForce(transform.forward * accelerationForce, ForceMode.Acceleration);
-        
+
             if (!audiosource.isPlaying)
             {
-                audiosource.Play(); 
+                audiosource.Play();
             }
             fuelController.UseFuel(Time.deltaTime);
         }
@@ -107,12 +107,12 @@ public class ControlDeNave : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-            transform.Rotate(Vector3.right, Time.deltaTime * tiltSpeed);
+            transform.Rotate(Vector3.up, Time.deltaTime * tiltSpeed);
         }
 
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.Rotate(Vector3.left, Time.deltaTime * tiltSpeed);
+            transform.Rotate(Vector3.down, Time.deltaTime * tiltSpeed);
         }
     }
 
@@ -127,10 +127,28 @@ public class ControlDeNave : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("platformEnd"))
         {
-            nextLevel.ActivateMenu();
+            
+            int totalActivatedCheckpoints = GetTotalActivatedCheckpoints();
+            print(totalActivatedCheckpoints);
+            if (totalActivatedCheckpoints == checkpoints.Count)
+            {
+                nextLevel.ActivateMenu();
+            }
+
         }
+        if (other.CompareTag("checkpoint"))
+        {
+            Checkpoint checkpoint = other.GetComponent<Checkpoint>();
+
+            if (!checkpoint.CheckpointActive())
+            {
+                checkpoint.ActivateCheckpoint();
+            }
+        }
+
         if (other.CompareTag("Obstacle"))
         {
             print("Sonido");
@@ -138,5 +156,20 @@ public class ControlDeNave : MonoBehaviour
         }
 
     }
+    private int GetTotalActivatedCheckpoints()
+    {
+        int totalActivatedCheckpoints = 0;
 
+        foreach (var checkpoint in checkpoints)
+        {
+            if (checkpoint.CheckpointActive())
+            {
+                totalActivatedCheckpoints++;
+            }
+        }
+
+        return totalActivatedCheckpoints;
+
+
+    }
 }
