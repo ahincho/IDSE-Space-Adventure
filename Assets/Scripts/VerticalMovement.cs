@@ -27,7 +27,7 @@ public class VerticalMovement : MonoBehaviour
 
         if (transform.position.y < initialYPosition + underBoundary || transform.position.y > initialYPosition + topBoundary)
         {
-            speed = -speed;
+            speed = speed;
         }
     }
 }
