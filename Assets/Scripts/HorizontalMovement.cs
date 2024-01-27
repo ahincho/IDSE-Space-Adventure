@@ -26,7 +26,7 @@ public class HorizontalMovement : MonoBehaviour
 
         if (transform.position.x < leftBoundary || transform.position.x > rightBoundary)
         {
-            speed = -speed;
+            speed = speed;
         }
     }
 }
