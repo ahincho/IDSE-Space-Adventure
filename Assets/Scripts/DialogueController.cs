@@ -10,7 +10,7 @@ public class DialogueController : MonoBehaviour
 
     public string[] lines;
 
-    private float textSpeed = 0.2f;
+    [SerializeField]private float textSpeed = 0.2f;
 
     int index;
 
