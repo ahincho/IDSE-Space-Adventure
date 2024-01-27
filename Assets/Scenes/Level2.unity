@@ -490,7 +490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4579553980399578, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1305.4
+      value: 717
       objectReference: {fileID: 0}
     - target: {fileID: 4579553980399578, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -528,6 +528,10 @@ PrefabInstance:
       propertyPath: score
       value: 
       objectReference: {fileID: 1901240165}
+    - target: {fileID: 4195082867190958240, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
+      propertyPath: points
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5720634613079520304, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
       propertyPath: speed
       value: 15
@@ -545,8 +549,16 @@ PrefabInstance:
       value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 7220473603033980725, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
+      propertyPath: speed
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7220473603033980725, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7220473603033980725, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
+      propertyPath: rightBoundary
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -580,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4992838361154946, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1074
+      value: 730
       objectReference: {fileID: 0}
     - target: {fileID: 4992838361154946, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
       propertyPath: m_LocalRotation.w
@@ -620,7 +632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1138884634853780918, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
       propertyPath: leftBoundary
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1138884634853780918, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
       propertyPath: rightBoundary
@@ -634,6 +646,10 @@ PrefabInstance:
       propertyPath: score
       value: 
       objectReference: {fileID: 1901240165}
+    - target: {fileID: 3510391898780139752, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
+      propertyPath: points
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8104521856281465071, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
       propertyPath: speed
       value: 15
@@ -1257,6 +1273,10 @@ PrefabInstance:
       propertyPath: score
       value: 
       objectReference: {fileID: 1901240165}
+    - target: {fileID: 4041743680418286403, guid: 9a6b93dfef57e54489077d86db2879d6, type: 3}
+      propertyPath: points
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3851,6 +3871,10 @@ PrefabInstance:
       propertyPath: score
       value: 
       objectReference: {fileID: 1901240165}
+    - target: {fileID: 3510391898780139752, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
+      propertyPath: points
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8104521856281465071, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
       propertyPath: speed
       value: 15
