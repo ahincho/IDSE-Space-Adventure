@@ -7,12 +7,14 @@ public class Checkpoint : MonoBehaviour
 {
 
     private bool activated = false;
+    [SerializeField] private FuelController fuel;
 
     public void ActivateCheckpoint()
     {
         if (!activated)
         {
             activated = true;
+            fuel.Restore();
             gameObject.SetActive(false);
         }
 
