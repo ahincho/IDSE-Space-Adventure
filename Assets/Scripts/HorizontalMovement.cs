@@ -24,7 +24,7 @@ public class HorizontalMovement : MonoBehaviour
 
         transform.Translate(movement);
 
-        if (transform.position.x < leftBoundary || transform.position.x > rightBoundary)
+        if (transform.position.x < initialXPosition + leftBoundary || transform.position.x > initialXPosition + rightBoundary)
         {
             speed = speed;
         }
