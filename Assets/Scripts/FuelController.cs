@@ -46,4 +46,9 @@ public class FuelController : MonoBehaviour
             menuGameOver.ActivateGameOver();
         }
     }
+
+    public void Restore()
+    {
+        fuel = maxFuel;
+    }
 }
