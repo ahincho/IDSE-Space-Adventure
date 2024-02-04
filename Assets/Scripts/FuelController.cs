@@ -11,6 +11,8 @@ public class FuelController : MonoBehaviour
     private Text fuelText;
     [SerializeField] private GameOver menuGameOver;
 
+    private float baseFuelConsumptionRate = 0.5f;
+
     void Start()
     {
         fuel = maxFuel; // Initialize fuel to 100%
@@ -35,7 +37,9 @@ public class FuelController : MonoBehaviour
         {
             fuelText.color = Color.red;
         }
-       
+
+        ConsumeFuel(baseFuelConsumptionRate * Time.deltaTime);
+
     }
     public void UseFuel(float amount)
     {
@@ -46,9 +50,20 @@ public class FuelController : MonoBehaviour
             menuGameOver.ActivateGameOver();
         }
     }
-
-    public void Restore()
+    private void ConsumeFuel(float amount)
     {
-        fuel = maxFuel;
+        fuel -= amount;
+        fuel = Mathf.Clamp(fuel, 0f, maxFuel);
+    }
+    public void Restore(float amout)
+    {
+        if (fuel + amout > 100)
+        {
+            fuel = maxFuel;
+        }
+        else
+        {
+            fuel += amout;
+        }
     }
 }

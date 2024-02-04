@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
 
-public class GameOver : MonoBehaviour
+public class GamePause : MonoBehaviour
 {
-    [SerializeField] private GameObject menuGameOver;
+    [SerializeField] private GameObject menuGamePause;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ActivateGamePause();
+        }
+    }
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -17,14 +24,14 @@ public class GameOver : MonoBehaviour
         SceneManager.LoadScene(name);
         Time.timeScale = 1f;
     }
-    public void Exit()
+    public void Continue()
     {
-        // UnityEditor.EditorApplication.isPlaying = false; // Remove line when deployed
-        Application.Quit();
+        Time.timeScale = 1f;
+        menuGamePause.SetActive(false);
     }
-    public void ActivateGameOver()
+    public void ActivateGamePause()
     {
-        menuGameOver.SetActive(true);
+        menuGamePause.SetActive(true);
         Time.timeScale = 0f;
     }
 }

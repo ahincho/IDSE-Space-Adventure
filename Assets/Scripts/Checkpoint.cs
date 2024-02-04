@@ -5,20 +5,36 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    private AudioSource audioSource;
 
     private bool activated = false;
+    private float dialogueDuration = 2f;
+
     [SerializeField] private FuelController fuel;
+    [SerializeField] private float amount;
+    [SerializeField] private GameObject dialogue;
+
 
     public void ActivateCheckpoint()
     {
         if (!activated)
         {
             activated = true;
-            fuel.Restore();
-            gameObject.SetActive(false);
+            audioSource = GetComponent<AudioSource>();
+            audioSource.Play();
+            fuel.Restore(amount);
+            StartCoroutine(ShowDialogueForDuration());
+            
         }
-
     }
 
-    public Boolean CheckpointActive() { return activated; }
+    private IEnumerator ShowDialogueForDuration()
+    {
+        dialogue.SetActive(true);
+        yield return new WaitForSeconds(dialogueDuration);
+        dialogue.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    public bool CheckpointActive() { return activated; }
 }

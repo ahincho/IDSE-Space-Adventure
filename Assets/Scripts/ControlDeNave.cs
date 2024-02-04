@@ -6,9 +6,10 @@ public class ControlDeNave : MonoBehaviour
 
     new Rigidbody rigidbody;
     new Transform transform;
-    public AudioSource audiosource;
+    public AudioSource audiosourcePropulsion;
     public AudioSource audiosource2;
     public AudioSource audioSourceCollision;
+    public AudioSource audioSourceLevelCompleted;
     private float accelerationForce = 5f;
     private float decelerationForce = 8f;
     private float tiltSpeed = 50f;
@@ -19,6 +20,7 @@ public class ControlDeNave : MonoBehaviour
 
     private FuelController fuelController;
     private List<Checkpoint> checkpoints = new List<Checkpoint>();
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -66,15 +68,15 @@ public class ControlDeNave : MonoBehaviour
         {
             rigidbody.AddForce(transform.forward * accelerationForce, ForceMode.Acceleration);
 
-            if (!audiosource.isPlaying)
+            if (!audiosourcePropulsion.isPlaying)
             {
-                audiosource.Play();
+                audiosourcePropulsion.Play();
             }
             fuelController.UseFuel(Time.deltaTime);
         }
         else
         {
-            audiosource.Stop();
+            audiosourcePropulsion.Stop();
         }
     }
 
@@ -89,17 +91,12 @@ public class ControlDeNave : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            var rotateRight = transform.rotation;
-            rotateRight.z -= Time.deltaTime * 1;
-            transform.rotation = rotateRight;
+            transform.Rotate(Vector3.up, Time.deltaTime * tiltSpeed);
             rigidbody.AddForce(transform.right * lateralForce, ForceMode.Acceleration);
         }
-
         else if (Input.GetKey(KeyCode.A))
         {
-            var rotateLeft = transform.rotation;
-            rotateLeft.z += Time.deltaTime * 1;
-            transform.rotation = rotateLeft;
+            transform.Rotate(Vector3.up, -Time.deltaTime * tiltSpeed);
             rigidbody.AddForce(-transform.right * lateralForce, ForceMode.Acceleration);
         }
     }
@@ -107,12 +104,12 @@ public class ControlDeNave : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-            transform.Rotate(Vector3.up, Time.deltaTime * tiltSpeed);
+            transform.Rotate(Vector3.right, Time.deltaTime * tiltSpeed);
         }
 
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.Rotate(Vector3.down, Time.deltaTime * tiltSpeed);
+            transform.Rotate(Vector3.left, Time.deltaTime * tiltSpeed);
         }
     }
 
@@ -132,6 +129,7 @@ public class ControlDeNave : MonoBehaviour
         {
             
             int totalActivatedCheckpoints = GetTotalActivatedCheckpoints();
+            audioSourceLevelCompleted.Play();
             print(totalActivatedCheckpoints);
             if (totalActivatedCheckpoints == checkpoints.Count)
             {

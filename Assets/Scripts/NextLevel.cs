@@ -24,7 +24,7 @@ public class NextLevel : MonoBehaviour
 
     public void Exit()
     {
-        UnityEditor.EditorApplication.isPlaying = false; // Remove line when deployed
+        // UnityEditor.EditorApplication.isPlaying = false; // Remove line when deployed
         Application.Quit();
     }
     public void ActivateMenu()

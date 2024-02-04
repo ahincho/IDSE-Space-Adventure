@@ -10,11 +10,12 @@ public class DialogueController : MonoBehaviour
 
     public string[] lines;
 
-    [SerializeField]private float textSpeed = 0.2f;
-
+    [SerializeField] private float textSpeed = 0.2f;
+    
     int index;
 
     [SerializeField] private GameObject dialogueController;
+    [SerializeField] private FuelController fuel;
     void Start()
     {
         dialogueText.text = string.Empty;
@@ -34,6 +35,7 @@ public class DialogueController : MonoBehaviour
                 StopAllCoroutines();
                 dialogueText.text = lines[index];
                 dialogueController.SetActive(false);
+                fuel.Restore(100);
             }
         }
     }
