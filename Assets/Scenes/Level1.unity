@@ -1568,6 +1568,7 @@ MonoBehaviour:
   textSpeed: 0.07
   dialogueController: {fileID: 889997032}
   fuel: {fileID: 783680747}
+  shipControl: {fileID: 2087489901}
 --- !u!1 &893393538
 GameObject:
   m_ObjectHideFlags: 0
@@ -3279,6 +3280,17 @@ Transform:
   - {fileID: 1180786197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2087489901 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5743973285964540349, guid: 8fa6f1614eb53d24a87f3f30c0a07cf8, type: 3}
+  m_PrefabInstance: {fileID: 3206892544631833303}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d013a75cf398b454abe10e51b8d48123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2108738607
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,9 +3628,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5743973285964540349, guid: 8fa6f1614eb53d24a87f3f30c0a07cf8, type: 3}
+      propertyPath: canMove
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743973285964540349, guid: 8fa6f1614eb53d24a87f3f30c0a07cf8, type: 3}
       propertyPath: nextLevel
       value: 
       objectReference: {fileID: 911313988}
+    - target: {fileID: 5743973285964540349, guid: 8fa6f1614eb53d24a87f3f30c0a07cf8, type: 3}
+      propertyPath: decelerationForce
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6023994929613509486, guid: 8fa6f1614eb53d24a87f3f30c0a07cf8, type: 3}
       propertyPath: m_Constraints
       value: 112
@@ -3675,6 +3695,10 @@ PrefabInstance:
     - target: {fileID: 322154084871017739, guid: 7098dba5fe090944eaad788488bbee0c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534696664628985736, guid: 7098dba5fe090944eaad788488bbee0c, type: 3}
+      propertyPath: m_Intensity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7783356058315253581, guid: 7098dba5fe090944eaad788488bbee0c, type: 3}
       propertyPath: m_Name

@@ -1,82 +1,89 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ControlDeNave : MonoBehaviour
 {
+    private Rigidbody _rigidbody;
+    private Transform _transform;
 
-    new Rigidbody rigidbody;
-    new Transform transform;
-    public AudioSource audiosourcePropulsion;
-    public AudioSource audiosource2;
-    public AudioSource audioSourceCollision;
-    public AudioSource audioSourceLevelCompleted;
-    private float accelerationForce = 5f;
-    private float decelerationForce = 8f;
-    private float tiltSpeed = 50f;
-    private float stabilizationSpeed = 5f;
-    private float lateralForce = 8f;
+    public AudioSource propulsionAudio;
+    public AudioSource engineAudio;
+    public AudioSource collisionAudio;
+    public AudioSource levelCompletedAudio;
+
+    private bool canMove = false;
+
+    [SerializeField] private float accelerationForce = 5f;
+    [SerializeField] private float decelerationForce = 8f;
+    [SerializeField] private float tiltSpeed = 50f;
+    [SerializeField] private float stabilizationSpeed = 5f;
+    [SerializeField] private float lateralForce = 8f;
 
     [SerializeField] private NextLevel nextLevel;
 
     private FuelController fuelController;
     private List<Checkpoint> checkpoints = new List<Checkpoint>();
 
-    void Start()
+    private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        transform = GetComponent<Transform>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _transform = transform;
         fuelController = FindObjectOfType<FuelController>();
         checkpoints.AddRange(FindObjectsOfType<Checkpoint>());
     }
 
-    void Update()
+    private void Update()
     {
-        ProcesarInput();
+        ProcessInput();
     }
-    private void ProcesarInput()
+
+    private void ProcessInput()
     {
-        Accelerate();
-        Decelerate();
-        Rotation();
-        Propulsion();
-        Tilt();
-        Stabilize();
+        if (canMove)
+        {
+            Accelerate();
+            Decelerate();
+            Rotate();
+            Propulsion();
+            Tilt();
+            Stabilize();
+        }
     }
-    // Handles the propulsion mechanics for a spaceship
+
     private void Propulsion()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidbody.freezeRotation = true;
-            rigidbody.AddRelativeForce(Vector3.up);
-            if (!audiosource2.isPlaying)
+            _rigidbody.freezeRotation = true;
+            _rigidbody.AddRelativeForce(Vector3.up);
+            if (!engineAudio.isPlaying)
             {
-                audiosource2.Play();
+                engineAudio.Play();
             }
             fuelController.UseFuel(Time.deltaTime);
         }
         else
         {
-            audiosource2.Stop();
+            engineAudio.Stop();
+            _rigidbody.freezeRotation = false;
         }
-        rigidbody.freezeRotation = false;
     }
 
     private void Accelerate()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            rigidbody.AddForce(transform.forward * accelerationForce, ForceMode.Acceleration);
-
-            if (!audiosourcePropulsion.isPlaying)
+            _rigidbody.AddForce(_transform.forward * accelerationForce, ForceMode.Acceleration);
+            if (!propulsionAudio.isPlaying)
             {
-                audiosourcePropulsion.Play();
+                propulsionAudio.Play();
             }
             fuelController.UseFuel(Time.deltaTime);
         }
         else
         {
-            audiosourcePropulsion.Stop();
+            propulsionAudio.Stop();
         }
     }
 
@@ -84,32 +91,34 @@ public class ControlDeNave : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.S))
         {
-            rigidbody.AddForce(-rigidbody.velocity.normalized * decelerationForce, ForceMode.Acceleration);
+            _rigidbody.AddForce(-_rigidbody.velocity.normalized * decelerationForce, ForceMode.Acceleration);
         }
     }
-    private void Rotation()
+
+    private void Rotate()
     {
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(Vector3.up, Time.deltaTime * tiltSpeed);
-            rigidbody.AddForce(transform.right * lateralForce, ForceMode.Acceleration);
+            _transform.Rotate(Vector3.up, Time.deltaTime * tiltSpeed);
+            _rigidbody.AddForce(_transform.right * lateralForce, ForceMode.Acceleration);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.up, -Time.deltaTime * tiltSpeed);
-            rigidbody.AddForce(-transform.right * lateralForce, ForceMode.Acceleration);
+            _transform.Rotate(Vector3.up, -Time.deltaTime * tiltSpeed);
+            _rigidbody.AddForce(-_transform.right * lateralForce, ForceMode.Acceleration);
         }
     }
+
     private void Tilt()
     {
         if (Input.GetKey(KeyCode.E))
         {
-            transform.Rotate(Vector3.right, Time.deltaTime * tiltSpeed);
+            _transform.Rotate(Vector3.right, Time.deltaTime * tiltSpeed);
         }
 
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.Rotate(Vector3.left, Time.deltaTime * tiltSpeed);
+            _transform.Rotate(Vector3.left, Time.deltaTime * tiltSpeed);
         }
     }
 
@@ -117,47 +126,41 @@ public class ControlDeNave : MonoBehaviour
     {
         if (!Input.GetKey(KeyCode.E) && !Input.GetKey(KeyCode.Q))
         {
-            Quaternion targetRotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * stabilizationSpeed);
+            Quaternion targetRotation = Quaternion.Euler(0f, _transform.rotation.eulerAngles.y, 0f);
+            _transform.rotation = Quaternion.Slerp(_transform.rotation, targetRotation, Time.deltaTime * stabilizationSpeed);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("platformEnd"))
         {
-            
             int totalActivatedCheckpoints = GetTotalActivatedCheckpoints();
-            audioSourceLevelCompleted.Play();
-            print(totalActivatedCheckpoints);
+            levelCompletedAudio.Play();
+            Debug.Log(totalActivatedCheckpoints);
             if (totalActivatedCheckpoints == checkpoints.Count)
             {
                 nextLevel.ActivateMenu();
             }
-
         }
         if (other.CompareTag("checkpoint"))
         {
             Checkpoint checkpoint = other.GetComponent<Checkpoint>();
-
             if (!checkpoint.CheckpointActive())
             {
                 checkpoint.ActivateCheckpoint();
             }
         }
-
         if (other.CompareTag("Obstacle"))
         {
-            print("Sonido");
-            audioSourceCollision.Play();
+            Debug.Log("Sound");
+            collisionAudio.Play();
         }
-
     }
+
     private int GetTotalActivatedCheckpoints()
     {
         int totalActivatedCheckpoints = 0;
-
         foreach (var checkpoint in checkpoints)
         {
             if (checkpoint.CheckpointActive())
@@ -165,9 +168,14 @@ public class ControlDeNave : MonoBehaviour
                 totalActivatedCheckpoints++;
             }
         }
-
         return totalActivatedCheckpoints;
-
-
+    }
+    public void setCanMove(bool c)
+    {
+        canMove = c;
+    }
+    public bool getCanMove(bool canMove)
+    {
+        return canMove;
     }
 }

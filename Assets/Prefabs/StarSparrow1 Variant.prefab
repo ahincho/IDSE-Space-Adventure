@@ -34,11 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1972534431178057005, guid: 70bc6b6358059e04bbf40b0ecb70b375, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.629433
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1972534431178057005, guid: 70bc6b6358059e04bbf40b0ecb70b375, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25.1
+      value: 21.6
       objectReference: {fileID: 0}
     - target: {fileID: 1972534431178057005, guid: 70bc6b6358059e04bbf40b0ecb70b375, type: 3}
       propertyPath: m_LocalPosition.z
@@ -137,10 +137,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d013a75cf398b454abe10e51b8d48123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audiosourcePropulsion: {fileID: 4615734602365128579}
-  audiosource2: {fileID: 2140730109075982011}
-  audioSourceCollision: {fileID: 2078743612953191810}
-  audioSourceLevelCompleted: {fileID: 4615734602365128579}
+  propulsionAudio: {fileID: 4615734602365128579}
+  engineAudio: {fileID: 2140730109075982011}
+  collisionAudio: {fileID: 2078743612953191810}
+  levelCompletedAudio: {fileID: 2938966190275072163}
+  accelerationForce: 5
+  decelerationForce: 8
+  tiltSpeed: 50
+  stabilizationSpeed: 5
+  lateralForce: 8
   nextLevel: {fileID: 0}
 --- !u!82 &4615734602365128579
 AudioSource:
@@ -469,7 +474,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8e28e1c83c2513e43bda798934017d0c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.749
   m_Pitch: 1
   Loop: 0
   Mute: 0

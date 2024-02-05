@@ -7,15 +7,17 @@ using TMPro;
 public class DialogueController : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
-
     public string[] lines;
 
     [SerializeField] private float textSpeed = 0.2f;
-    
-    int index;
-
     [SerializeField] private GameObject dialogueController;
     [SerializeField] private FuelController fuel;
+    [SerializeField]private ControlDeNave shipControl;
+
+    private int index = 0;
+    private float autoCloseDelay = 3f;
+    private bool dialogueInProgress = false;
+
     void Start()
     {
         dialogueText.text = string.Empty;
@@ -24,28 +26,20 @@ public class DialogueController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (dialogueInProgress && Input.GetMouseButtonDown(0))
         {
             if (dialogueText.text == lines[index])
             {
                 NextLine();
             }
-            else
-            {
-                StopAllCoroutines();
-                dialogueText.text = lines[index];
-                dialogueController.SetActive(false);
-                fuel.Restore(100);
-            }
         }
     }
-     
+
     public void StartDialogue()
     {
-        index = 0;
-
+        dialogueInProgress = true;
+        shipControl.setCanMove(false);
         StartCoroutine(WriteLine());
-
     }
 
     IEnumerator WriteLine()
@@ -53,8 +47,10 @@ public class DialogueController : MonoBehaviour
         foreach (char letter in lines[index].ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(textSpeed);
+            yield return new WaitForSecondsRealtime(textSpeed);
         }
+        yield return new WaitForSecondsRealtime(autoCloseDelay);
+        NextLine();
     }
 
     public void NextLine()
@@ -65,10 +61,18 @@ public class DialogueController : MonoBehaviour
             dialogueText.text = string.Empty;
             StartCoroutine(WriteLine());
         }
-
         else
         {
-            gameObject.SetActive(false);
+            EndDialogue();
         }
+    }
+
+    private void EndDialogue()
+    {
+        dialogueInProgress = false;
+        fuel.Restore(100);
+        shipControl.setCanMove(true);
+        dialogueController.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
